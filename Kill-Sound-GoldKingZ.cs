@@ -23,6 +23,7 @@ public class KillSoundGoldKingZ : BasePlugin
     public override string ModuleDescription => "https://github.com/oqyh";
     internal static IStringLocalizer? Stringlocalizer;
     private CounterStrikeSharp.API.Modules.Timers.Timer? HUDTimer;
+    Random random = new Random();
     public override void Load(bool hotReload)
     {
         Configs.Load(ModuleDirectory);
@@ -372,20 +373,27 @@ public class KillSoundGoldKingZ : BasePlugin
             try
             {
                 string _json = Path.Combine(ModuleDirectory, "../../plugins/Kill-Sound-GoldKingZ/config/Kill_Settings.json");
+                string _pathJson = Path.Combine(ModuleDirectory, "../../plugins/Kill-Sound-GoldKingZ/config/Kill_Paths.json");
                 var json = Helper.LoadJsonFromFile(_json);
+                var pathJson = Helper.LoadPathJsonFromFile(_pathJson);
 
                 string SsoundPath = "";
+                List<string> SsoundsPath;
                 float SIntervalHUD = 10;
                 bool Sanouncement = false;
                 bool SShowChat = false;
                 bool SShowCenter = false;
                 if (json.ContainsKey("SelfKill"))
-                {
-                    SsoundPath = json["SelfKill"]["Path"]?.ToString()!;
-                    if (!json["SelfKill"].ContainsKey("ShowCenter_InSecs")) SIntervalHUD = 0; else float.TryParse(json["SelfKill"]["ShowCenter_InSecs"]?.ToString(), out SIntervalHUD);
-                    if (!json["SelfKill"].ContainsKey("Announcement")) Sanouncement = false; else bool.TryParse(json["SelfKill"]["Announcement"]?.ToString(), out Sanouncement);
-                    if (!json["SelfKill"].ContainsKey("ShowChat")) SShowChat = false; else bool.TryParse(json["SelfKill"]["ShowChat"]?.ToString(), out SShowChat);
-                    if (!json["SelfKill"].ContainsKey("ShowCenter")) SShowCenter = false; else bool.TryParse(json["SelfKill"]["ShowCenter"]?.ToString(), out SShowCenter);
+                {                    
+                    SsoundsPath = pathJson["SelfKill_Paths"];           
+                    if (SsoundsPath != null && SsoundsPath.Count > 0) 
+                    {
+                        SsoundPath = SsoundsPath[random.Next(SsoundsPath.Count)];                    
+                        if (!json["SelfKill"].ContainsKey("ShowCenter_InSecs")) SIntervalHUD = 0; else float.TryParse(json["SelfKill"]["ShowCenter_InSecs"]?.ToString(), out SIntervalHUD);
+                        if (!json["SelfKill"].ContainsKey("Announcement")) Sanouncement = false; else bool.TryParse(json["SelfKill"]["Announcement"]?.ToString(), out Sanouncement);
+                        if (!json["SelfKill"].ContainsKey("ShowChat")) SShowChat = false; else bool.TryParse(json["SelfKill"]["ShowChat"]?.ToString(), out SShowChat);
+                        if (!json["SelfKill"].ContainsKey("ShowCenter")) SShowCenter = false; else bool.TryParse(json["SelfKill"]["ShowCenter"]?.ToString(), out SShowCenter);
+                    }
                 }
                 
                 if (!string.IsNullOrEmpty(SsoundPath))
@@ -538,20 +546,27 @@ public class KillSoundGoldKingZ : BasePlugin
             try
             {
                 string _json = Path.Combine(ModuleDirectory, "../../plugins/Kill-Sound-GoldKingZ/config/Kill_Settings.json");
+                string _pathJson = Path.Combine(ModuleDirectory, "../../plugins/Kill-Sound-GoldKingZ/config/Kill_Paths.json");
                 var json = Helper.LoadJsonFromFile(_json);
+                var pathJson = Helper.LoadPathJsonFromFile(_pathJson);
 
                 string SsoundPath = "";
+                List<string> SsoundsPath;
                 float SIntervalHUD = 10;
                 bool Sanouncement = false;
                 bool SShowChat = false;
                 bool SShowCenter = false;
                 if (json.ContainsKey("SelfKill"))
                 {
-                    SsoundPath = json["SelfKill"]["Path"]?.ToString()!;
-                    if (!json["SelfKill"].ContainsKey("ShowCenter_InSecs")) SIntervalHUD = 0; else float.TryParse(json["SelfKill"]["ShowCenter_InSecs"]?.ToString(), out SIntervalHUD);
-                    if (!json["SelfKill"].ContainsKey("Announcement")) Sanouncement = false; else bool.TryParse(json["SelfKill"]["Announcement"]?.ToString(), out Sanouncement);
-                    if (!json["SelfKill"].ContainsKey("ShowChat")) SShowChat = false; else bool.TryParse(json["SelfKill"]["ShowChat"]?.ToString(), out SShowChat);
-                    if (!json["SelfKill"].ContainsKey("ShowCenter")) SShowCenter = false; else bool.TryParse(json["SelfKill"]["ShowCenter"]?.ToString(), out SShowCenter);
+                    SsoundsPath = pathJson["SelfKill_Paths"];           
+                    if (SsoundsPath != null && SsoundsPath.Count > 0) 
+                    {
+                        SsoundPath = SsoundsPath[random.Next(SsoundsPath.Count)];
+                        if (!json["SelfKill"].ContainsKey("ShowCenter_InSecs")) SIntervalHUD = 0; else float.TryParse(json["SelfKill"]["ShowCenter_InSecs"]?.ToString(), out SIntervalHUD);
+                        if (!json["SelfKill"].ContainsKey("Announcement")) Sanouncement = false; else bool.TryParse(json["SelfKill"]["Announcement"]?.ToString(), out Sanouncement);
+                        if (!json["SelfKill"].ContainsKey("ShowChat")) SShowChat = false; else bool.TryParse(json["SelfKill"]["ShowChat"]?.ToString(), out SShowChat);
+                        if (!json["SelfKill"].ContainsKey("ShowCenter")) SShowCenter = false; else bool.TryParse(json["SelfKill"]["ShowCenter"]?.ToString(), out SShowCenter);
+                    }
                 }
                 
                 if (!string.IsNullOrEmpty(SsoundPath))
@@ -692,20 +707,27 @@ public class KillSoundGoldKingZ : BasePlugin
                 try
                 {
                     string _json = Path.Combine(ModuleDirectory, "../../plugins/Kill-Sound-GoldKingZ/config/Kill_Settings.json");
+                    string _pathJson = Path.Combine(ModuleDirectory, "../../plugins/Kill-Sound-GoldKingZ/config/Kill_Paths.json");
                     var json = Helper.LoadJsonFromFile(_json);
+                    var pathJson = Helper.LoadPathJsonFromFile(_pathJson);
 
                     string TsoundPath = "";
+                    List<string> TsoundsPath;
                     float TIntervalHUD = 10;
                     bool Tanouncement = false;
                     bool TShowChat = false;
                     bool TShowCenter = false;
                     if (json.ContainsKey("TeamKill"))
                     {
-                        TsoundPath = json["TeamKill"]["Path"]?.ToString()!;
-                        if (!json["TeamKill"].ContainsKey("ShowCenter_InSecs")) TIntervalHUD = 0; else float.TryParse(json["TeamKill"]["ShowCenter_InSecs"]?.ToString(), out TIntervalHUD);
-                        if (!json["TeamKill"].ContainsKey("Announcement")) Tanouncement = false; else bool.TryParse(json["TeamKill"]["Announcement"]?.ToString(), out Tanouncement);
-                        if (!json["TeamKill"].ContainsKey("ShowChat")) TShowChat = false; else bool.TryParse(json["TeamKill"]["ShowChat"]?.ToString(), out TShowChat);
-                        if (!json["TeamKill"].ContainsKey("ShowCenter")) TShowCenter = false; else bool.TryParse(json["TeamKill"]["ShowCenter"]?.ToString(), out TShowCenter);
+                        TsoundsPath = pathJson["TeamKill_Paths"];           
+                        if (TsoundsPath != null && TsoundsPath.Count > 0) 
+                        {
+                            TsoundPath = TsoundsPath[random.Next(TsoundsPath.Count)];
+                            if (!json["TeamKill"].ContainsKey("ShowCenter_InSecs")) TIntervalHUD = 0; else float.TryParse(json["TeamKill"]["ShowCenter_InSecs"]?.ToString(), out TIntervalHUD);
+                            if (!json["TeamKill"].ContainsKey("Announcement")) Tanouncement = false; else bool.TryParse(json["TeamKill"]["Announcement"]?.ToString(), out Tanouncement);
+                            if (!json["TeamKill"].ContainsKey("ShowChat")) TShowChat = false; else bool.TryParse(json["TeamKill"]["ShowChat"]?.ToString(), out TShowChat);
+                            if (!json["TeamKill"].ContainsKey("ShowCenter")) TShowCenter = false; else bool.TryParse(json["TeamKill"]["ShowCenter"]?.ToString(), out TShowCenter);
+                        }
                     }
 
 					if (!string.IsNullOrEmpty(TsoundPath))
@@ -837,17 +859,22 @@ public class KillSoundGoldKingZ : BasePlugin
                     int numberoftaserkill = Globals.Kill_Taser[playeridattacker];
                     
                     string FsoundPath = "";
+                    List<string> FsoundsPath;
                     float FIntervalHUD = 10;
                     bool Fanouncement = false;
                     bool FShowChat = false;
                     bool FShowCenter = false;
                     if (json.ContainsKey("FirstBlood"))
                     {
-                        FsoundPath = json["FirstBlood"]["Path"]?.ToString()!;
-                        if (!json["FirstBlood"].ContainsKey("ShowCenter_InSecs")) FIntervalHUD = 0; else float.TryParse(json["FirstBlood"]["ShowCenter_InSecs"]?.ToString(), out FIntervalHUD);
-                        if (!json["FirstBlood"].ContainsKey("Announcement")) Fanouncement = false; else bool.TryParse(json["FirstBlood"]["Announcement"]?.ToString(), out Fanouncement);
-                        if (!json["FirstBlood"].ContainsKey("ShowChat")) FShowChat = false; else bool.TryParse(json["FirstBlood"]["ShowChat"]?.ToString(), out FShowChat);
-                        if (!json["FirstBlood"].ContainsKey("ShowCenter")) FShowCenter = false; else bool.TryParse(json["FirstBlood"]["ShowCenter"]?.ToString(), out FShowCenter);
+                        FsoundsPath = pathJson["FirstBlood_Paths"];           
+                        if (FsoundsPath != null && FsoundsPath.Count > 0) 
+                        {
+                            FsoundPath = FsoundsPath[random.Next(FsoundsPath.Count)];
+                            if (!json["FirstBlood"].ContainsKey("ShowCenter_InSecs")) FIntervalHUD = 0; else float.TryParse(json["FirstBlood"]["ShowCenter_InSecs"]?.ToString(), out FIntervalHUD);
+                            if (!json["FirstBlood"].ContainsKey("Announcement")) Fanouncement = false; else bool.TryParse(json["FirstBlood"]["Announcement"]?.ToString(), out Fanouncement);
+                            if (!json["FirstBlood"].ContainsKey("ShowChat")) FShowChat = false; else bool.TryParse(json["FirstBlood"]["ShowChat"]?.ToString(), out FShowChat);
+                            if (!json["FirstBlood"].ContainsKey("ShowCenter")) FShowCenter = false; else bool.TryParse(json["FirstBlood"]["ShowCenter"]?.ToString(), out FShowCenter);
+                        }
                     }
 					
                     if (Globals.First_Blood && !string.IsNullOrEmpty(FsoundPath))
@@ -961,6 +988,7 @@ public class KillSoundGoldKingZ : BasePlugin
                         
                     }
                     
+                    List<string> NsoundsPath;
                     string NsoundPath = "";
                     double NInterval = 5;
                     float NIntervalHUD = 10;
@@ -971,21 +999,29 @@ public class KillSoundGoldKingZ : BasePlugin
                     if (json.ContainsKey("KnifeKill"))
                     {
                         NSteak = false;
-                        NsoundPath = json["KnifeKill"]["Path"]?.ToString()!;
-                        if (!json["KnifeKill"].ContainsKey("Interval_InSecs")) NInterval = 5; else double.TryParse(json["KnifeKill"]["Interval_InSecs"]?.ToString(), out NInterval);
-                        if (!json["KnifeKill"].ContainsKey("ShowCenter_InSecs")) NIntervalHUD = 0; else float.TryParse(json["KnifeKill"]["ShowCenter_InSecs"]?.ToString(), out NIntervalHUD);
-                        if (!json["KnifeKill"].ContainsKey("Announcement")) Nanouncement = false; else bool.TryParse(json["KnifeKill"]["Announcement"]?.ToString(), out Nanouncement);
-                        if (!json["KnifeKill"].ContainsKey("ShowChat")) NShowChat = false; else bool.TryParse(json["KnifeKill"]["ShowChat"]?.ToString(), out NShowChat);
-                        if (!json["KnifeKill"].ContainsKey("ShowCenter")) NShowCenter = false; else bool.TryParse(json["KnifeKill"]["ShowCenter"]?.ToString(), out NShowCenter);
+                        NsoundsPath = pathJson["KnifeKill_Paths"];           
+                        if (NsoundsPath != null && NsoundsPath.Count > 0) 
+                        {
+                            NsoundPath = NsoundsPath[random.Next(NsoundsPath.Count)];
+                            if (!json["KnifeKill"].ContainsKey("Interval_InSecs")) NInterval = 5; else double.TryParse(json["KnifeKill"]["Interval_InSecs"]?.ToString(), out NInterval);
+                            if (!json["KnifeKill"].ContainsKey("ShowCenter_InSecs")) NIntervalHUD = 0; else float.TryParse(json["KnifeKill"]["ShowCenter_InSecs"]?.ToString(), out NIntervalHUD);
+                            if (!json["KnifeKill"].ContainsKey("Announcement")) Nanouncement = false; else bool.TryParse(json["KnifeKill"]["Announcement"]?.ToString(), out Nanouncement);
+                            if (!json["KnifeKill"].ContainsKey("ShowChat")) NShowChat = false; else bool.TryParse(json["KnifeKill"]["ShowChat"]?.ToString(), out NShowChat);
+                            if (!json["KnifeKill"].ContainsKey("ShowCenter")) NShowCenter = false; else bool.TryParse(json["KnifeKill"]["ShowCenter"]?.ToString(), out NShowCenter);
+                        }
                     }else if (json.ContainsKey("KnifeKill_" + numberofknifekill))
                     {
                         NSteak = true;
-                        NsoundPath = json["KnifeKill_" + numberofknifekill]["Path"]?.ToString()!;
-                        if (!json["KnifeKill_" + numberofknifekill].ContainsKey("Interval_InSecs")) NInterval = 5; else double.TryParse(json["KnifeKill_" + numberofknifekill]["Interval_InSecs"]?.ToString(), out NInterval);
-                        if (!json["KnifeKill_" + numberofknifekill].ContainsKey("ShowCenter_InSecs")) NIntervalHUD = 0; else float.TryParse(json["KnifeKill_" + numberofknifekill]["ShowCenter_InSecs"]?.ToString(), out NIntervalHUD);
-                        if (!json["KnifeKill_" + numberofknifekill].ContainsKey("Announcement")) Nanouncement = false; else bool.TryParse(json["KnifeKill_" + numberofknifekill]["Announcement"]?.ToString(), out Nanouncement);
-                        if (!json["KnifeKill_" + numberofknifekill].ContainsKey("ShowChat")) NShowChat = false; else bool.TryParse(json["KnifeKill_" + numberofknifekill]["ShowChat"]?.ToString(), out NShowChat);
-                        if (!json["KnifeKill_" + numberofknifekill].ContainsKey("ShowCenter")) NShowCenter = false; else bool.TryParse(json["KnifeKill_" + numberofknifekill]["ShowCenter"]?.ToString(), out NShowCenter);
+                        NsoundsPath = pathJson["KnifeKill_" + numberofknifekill + "_Paths"];
+                        if (NsoundsPath != null && NsoundsPath.Count > 0) 
+                        {
+                            NsoundPath = NsoundsPath[random.Next(NsoundsPath.Count)];
+                            if (!json["KnifeKill_" + numberofknifekill].ContainsKey("Interval_InSecs")) NInterval = 5; else double.TryParse(json["KnifeKill_" + numberofknifekill]["Interval_InSecs"]?.ToString(), out NInterval);
+                            if (!json["KnifeKill_" + numberofknifekill].ContainsKey("ShowCenter_InSecs")) NIntervalHUD = 0; else float.TryParse(json["KnifeKill_" + numberofknifekill]["ShowCenter_InSecs"]?.ToString(), out NIntervalHUD);
+                            if (!json["KnifeKill_" + numberofknifekill].ContainsKey("Announcement")) Nanouncement = false; else bool.TryParse(json["KnifeKill_" + numberofknifekill]["Announcement"]?.ToString(), out Nanouncement);
+                            if (!json["KnifeKill_" + numberofknifekill].ContainsKey("ShowChat")) NShowChat = false; else bool.TryParse(json["KnifeKill_" + numberofknifekill]["ShowChat"]?.ToString(), out NShowChat);
+                            if (!json["KnifeKill_" + numberofknifekill].ContainsKey("ShowCenter")) NShowCenter = false; else bool.TryParse(json["KnifeKill_" + numberofknifekill]["ShowCenter"]?.ToString(), out NShowCenter);
+                        }
                     }
                     if (knifekill && !string.IsNullOrEmpty(NsoundPath) && NInterval > 0)
                     {
@@ -1186,6 +1222,7 @@ public class KillSoundGoldKingZ : BasePlugin
                     }
 
                     string GsoundPath = "";
+                    List<string> GsoundsPath;
                     double GInterval = 5;
                     float GIntervalHUD = 10;
                     bool Ganouncement = false;
@@ -1195,21 +1232,29 @@ public class KillSoundGoldKingZ : BasePlugin
                     if (json.ContainsKey("GrenadeKill"))
                     {
                         GSteak = false;
-                        GsoundPath = json["GrenadeKill"]["Path"]?.ToString()!;
-                        if (!json["GrenadeKill"].ContainsKey("Interval_InSecs")) GInterval = 5; else double.TryParse(json["GrenadeKill"]["Interval_InSecs"]?.ToString(), out GInterval);
-                        if (!json["GrenadeKill"].ContainsKey("ShowCenter_InSecs")) GIntervalHUD = 0; else float.TryParse(json["GrenadeKill"]["ShowCenter_InSecs"]?.ToString(), out GIntervalHUD);
-                        if (!json["GrenadeKill"].ContainsKey("Announcement")) Ganouncement = false; else bool.TryParse(json["GrenadeKill"]["Announcement"]?.ToString(), out Ganouncement);
-                        if (!json["GrenadeKill"].ContainsKey("ShowChat")) GShowChat = false; else bool.TryParse(json["GrenadeKill"]["ShowChat"]?.ToString(), out GShowChat);
-                        if (!json["GrenadeKill"].ContainsKey("ShowCenter")) GShowCenter = false; else bool.TryParse(json["GrenadeKill"]["ShowCenter"]?.ToString(), out GShowCenter);
+                        GsoundsPath = pathJson["GrenadeKill_Paths"];           
+                        if (GsoundsPath != null && GsoundsPath.Count > 0) 
+                        {
+                            GsoundPath = GsoundsPath[random.Next(GsoundsPath.Count)];
+                            if (!json["GrenadeKill"].ContainsKey("Interval_InSecs")) GInterval = 5; else double.TryParse(json["GrenadeKill"]["Interval_InSecs"]?.ToString(), out GInterval);
+                            if (!json["GrenadeKill"].ContainsKey("ShowCenter_InSecs")) GIntervalHUD = 0; else float.TryParse(json["GrenadeKill"]["ShowCenter_InSecs"]?.ToString(), out GIntervalHUD);
+                            if (!json["GrenadeKill"].ContainsKey("Announcement")) Ganouncement = false; else bool.TryParse(json["GrenadeKill"]["Announcement"]?.ToString(), out Ganouncement);
+                            if (!json["GrenadeKill"].ContainsKey("ShowChat")) GShowChat = false; else bool.TryParse(json["GrenadeKill"]["ShowChat"]?.ToString(), out GShowChat);
+                            if (!json["GrenadeKill"].ContainsKey("ShowCenter")) GShowCenter = false; else bool.TryParse(json["GrenadeKill"]["ShowCenter"]?.ToString(), out GShowCenter);
+                        }
                     }else if (json.ContainsKey("GrenadeKill_" + numberofnadekill))
                     {
                         GSteak = true;
-                        GsoundPath = json["GrenadeKill_" + numberofnadekill]["Path"]?.ToString()!;
-                        if (!json["GrenadeKill_" + numberofnadekill].ContainsKey("Interval_InSecs")) GInterval = 5; else double.TryParse(json["GrenadeKill_" + numberofnadekill]["Interval_InSecs"]?.ToString(), out GInterval);
-                        if (!json["GrenadeKill_" + numberofnadekill].ContainsKey("ShowCenter_InSecs")) GIntervalHUD = 0; else float.TryParse(json["GrenadeKill_" + numberofnadekill]["ShowCenter_InSecs"]?.ToString(), out GIntervalHUD);
-                        if (!json["GrenadeKill_" + numberofnadekill].ContainsKey("Announcement")) Ganouncement = false; else bool.TryParse(json["GrenadeKill_" + numberofnadekill]["Announcement"]?.ToString(), out Ganouncement);
-                        if (!json["GrenadeKill_" + numberofnadekill].ContainsKey("ShowChat")) GShowChat = false; else bool.TryParse(json["GrenadeKill_" + numberofnadekill]["ShowChat"]?.ToString(), out GShowChat);
-                        if (!json["GrenadeKill_" + numberofnadekill].ContainsKey("ShowCenter")) GShowCenter = false; else bool.TryParse(json["GrenadeKill_" + numberofnadekill]["ShowCenter"]?.ToString(), out GShowCenter);
+                        GsoundsPath = pathJson["GrenadeKill_" + numberofnadekill + "_Paths"];           
+                        if (GsoundsPath != null && GsoundsPath.Count > 0) 
+                        {
+                            GsoundPath = GsoundsPath[random.Next(GsoundsPath.Count)];
+                            if (!json["GrenadeKill_" + numberofnadekill].ContainsKey("Interval_InSecs")) GInterval = 5; else double.TryParse(json["GrenadeKill_" + numberofnadekill]["Interval_InSecs"]?.ToString(), out GInterval);
+                            if (!json["GrenadeKill_" + numberofnadekill].ContainsKey("ShowCenter_InSecs")) GIntervalHUD = 0; else float.TryParse(json["GrenadeKill_" + numberofnadekill]["ShowCenter_InSecs"]?.ToString(), out GIntervalHUD);
+                            if (!json["GrenadeKill_" + numberofnadekill].ContainsKey("Announcement")) Ganouncement = false; else bool.TryParse(json["GrenadeKill_" + numberofnadekill]["Announcement"]?.ToString(), out Ganouncement);
+                            if (!json["GrenadeKill_" + numberofnadekill].ContainsKey("ShowChat")) GShowChat = false; else bool.TryParse(json["GrenadeKill_" + numberofnadekill]["ShowChat"]?.ToString(), out GShowChat);
+                            if (!json["GrenadeKill_" + numberofnadekill].ContainsKey("ShowCenter")) GShowCenter = false; else bool.TryParse(json["GrenadeKill_" + numberofnadekill]["ShowCenter"]?.ToString(), out GShowCenter);
+                        }
                     }
                     if (NadeKill && !string.IsNullOrEmpty(GsoundPath) && GInterval > 0)
                     {
@@ -1409,6 +1454,7 @@ public class KillSoundGoldKingZ : BasePlugin
                     }
 
                     string MsoundPath = "";
+                    List<string> MsoundsPath;
                     double MInterval = 5;
                     float MIntervalHUD = 10;
                     bool Manouncement = false;
@@ -1418,21 +1464,29 @@ public class KillSoundGoldKingZ : BasePlugin
                     if (json.ContainsKey("MollyKill"))
                     {
                         MSteak = false;
-                        MsoundPath = json["MollyKill"]["Path"]?.ToString()!;
-                        if (!json["MollyKill"].ContainsKey("Interval_InSecs")) MInterval = 5; else double.TryParse(json["MollyKill"]["Interval_InSecs"]?.ToString(), out MInterval);
-                        if (!json["MollyKill"].ContainsKey("ShowCenter_InSecs")) MIntervalHUD = 0; else float.TryParse(json["MollyKill"]["ShowCenter_InSecs"]?.ToString(), out MIntervalHUD);
-                        if (!json["MollyKill"].ContainsKey("Announcement")) Manouncement = false; else bool.TryParse(json["MollyKill"]["Announcement"]?.ToString(), out Manouncement);
-                        if (!json["MollyKill"].ContainsKey("ShowChat")) MShowChat = false; else bool.TryParse(json["MollyKill"]["ShowChat"]?.ToString(), out MShowChat);
-                        if (!json["MollyKill"].ContainsKey("ShowCenter")) MShowCenter = false; else bool.TryParse(json["MollyKill"]["ShowCenter"]?.ToString(), out MShowCenter);
+                        MsoundsPath = pathJson["MollyKill_Paths"];           
+                        if (MsoundsPath != null && MsoundsPath.Count > 0) 
+                        {
+                            MsoundPath = MsoundsPath[random.Next(MsoundsPath.Count)];
+                            if (!json["MollyKill"].ContainsKey("Interval_InSecs")) MInterval = 5; else double.TryParse(json["MollyKill"]["Interval_InSecs"]?.ToString(), out MInterval);
+                            if (!json["MollyKill"].ContainsKey("ShowCenter_InSecs")) MIntervalHUD = 0; else float.TryParse(json["MollyKill"]["ShowCenter_InSecs"]?.ToString(), out MIntervalHUD);
+                            if (!json["MollyKill"].ContainsKey("Announcement")) Manouncement = false; else bool.TryParse(json["MollyKill"]["Announcement"]?.ToString(), out Manouncement);
+                            if (!json["MollyKill"].ContainsKey("ShowChat")) MShowChat = false; else bool.TryParse(json["MollyKill"]["ShowChat"]?.ToString(), out MShowChat);
+                            if (!json["MollyKill"].ContainsKey("ShowCenter")) MShowCenter = false; else bool.TryParse(json["MollyKill"]["ShowCenter"]?.ToString(), out MShowCenter);
+                        }
                     }else if (json.ContainsKey("MollyKill_" + numberofmollykill))
                     {
                         MSteak = true;
-                        MsoundPath = json["MollyKill_" + numberofmollykill]["Path"]?.ToString()!;
-                        if (!json["MollyKill_" + numberofmollykill].ContainsKey("Interval_InSecs")) MInterval = 5; else double.TryParse(json["MollyKill_" + numberofmollykill]["Interval_InSecs"]?.ToString(), out MInterval);
-                        if (!json["MollyKill_" + numberofmollykill].ContainsKey("ShowCenter_InSecs")) MIntervalHUD = 0; else float.TryParse(json["MollyKill_" + numberofmollykill]["ShowCenter_InSecs"]?.ToString(), out MIntervalHUD);
-                        if (!json["MollyKill_" + numberofmollykill].ContainsKey("Announcement")) Manouncement = false; else bool.TryParse(json["MollyKill_" + numberofmollykill]["Announcement"]?.ToString(), out Manouncement);
-                        if (!json["MollyKill_" + numberofmollykill].ContainsKey("ShowChat")) MShowChat = false; else bool.TryParse(json["MollyKill_" + numberofmollykill]["ShowChat"]?.ToString(), out MShowChat);
-                        if (!json["MollyKill_" + numberofmollykill].ContainsKey("ShowCenter")) MShowCenter = false; else bool.TryParse(json["MollyKill_" + numberofmollykill]["ShowCenter"]?.ToString(), out MShowCenter);
+                        MsoundsPath = pathJson["MollyKill_" + numberofmollykill + "_Paths"];           
+                        if (MsoundsPath != null && MsoundsPath.Count > 0) 
+                        {
+                            MsoundPath = MsoundsPath[random.Next(MsoundsPath.Count)];
+                            if (!json["MollyKill_" + numberofmollykill].ContainsKey("Interval_InSecs")) MInterval = 5; else double.TryParse(json["MollyKill_" + numberofmollykill]["Interval_InSecs"]?.ToString(), out MInterval);
+                            if (!json["MollyKill_" + numberofmollykill].ContainsKey("ShowCenter_InSecs")) MIntervalHUD = 0; else float.TryParse(json["MollyKill_" + numberofmollykill]["ShowCenter_InSecs"]?.ToString(), out MIntervalHUD);
+                            if (!json["MollyKill_" + numberofmollykill].ContainsKey("Announcement")) Manouncement = false; else bool.TryParse(json["MollyKill_" + numberofmollykill]["Announcement"]?.ToString(), out Manouncement);
+                            if (!json["MollyKill_" + numberofmollykill].ContainsKey("ShowChat")) MShowChat = false; else bool.TryParse(json["MollyKill_" + numberofmollykill]["ShowChat"]?.ToString(), out MShowChat);
+                            if (!json["MollyKill_" + numberofmollykill].ContainsKey("ShowCenter")) MShowCenter = false; else bool.TryParse(json["MollyKill_" + numberofmollykill]["ShowCenter"]?.ToString(), out MShowCenter);
+                        }
                     }
                     if (MollyKill && !string.IsNullOrEmpty(MsoundPath) && MInterval > 0)
                     {
@@ -1633,6 +1687,7 @@ public class KillSoundGoldKingZ : BasePlugin
                     }
                     
                     string ZsoundPath = "";
+                    List<string> ZsoundsPath;
                     double ZInterval = 5;
                     float ZIntervalHUD = 10;
                     bool Zanouncement = false;
@@ -1642,21 +1697,29 @@ public class KillSoundGoldKingZ : BasePlugin
                     if (json.ContainsKey("TaserKill"))
                     {
                         ZSteak = false;
-                        ZsoundPath = json["TaserKill"]["Path"]?.ToString()!;
-                        if (!json["TaserKill"].ContainsKey("Interval_InSecs")) ZInterval = 5; else double.TryParse(json["TaserKill"]["Interval_InSecs"]?.ToString(), out ZInterval);
-                        if (!json["TaserKill"].ContainsKey("ShowCenter_InSecs")) ZIntervalHUD = 0; else float.TryParse(json["TaserKill"]["ShowCenter_InSecs"]?.ToString(), out ZIntervalHUD);
-                        if (!json["TaserKill"].ContainsKey("Announcement")) Zanouncement = false; else bool.TryParse(json["TaserKill"]["Announcement"]?.ToString(), out Zanouncement);
-                        if (!json["TaserKill"].ContainsKey("ShowChat")) ZShowChat = false; else bool.TryParse(json["TaserKill"]["ShowChat"]?.ToString(), out ZShowChat);
-                        if (!json["TaserKill"].ContainsKey("ShowCenter")) ZShowCenter = false; else bool.TryParse(json["TaserKill"]["ShowCenter"]?.ToString(), out ZShowCenter);
+                        ZsoundsPath = pathJson["TaserKill_Paths"];           
+                        if (ZsoundsPath != null && ZsoundsPath.Count > 0) 
+                        {
+                            ZsoundPath = ZsoundsPath[random.Next(ZsoundsPath.Count)];
+                            if (!json["TaserKill"].ContainsKey("Interval_InSecs")) ZInterval = 5; else double.TryParse(json["TaserKill"]["Interval_InSecs"]?.ToString(), out ZInterval);
+                            if (!json["TaserKill"].ContainsKey("ShowCenter_InSecs")) ZIntervalHUD = 0; else float.TryParse(json["TaserKill"]["ShowCenter_InSecs"]?.ToString(), out ZIntervalHUD);
+                            if (!json["TaserKill"].ContainsKey("Announcement")) Zanouncement = false; else bool.TryParse(json["TaserKill"]["Announcement"]?.ToString(), out Zanouncement);
+                            if (!json["TaserKill"].ContainsKey("ShowChat")) ZShowChat = false; else bool.TryParse(json["TaserKill"]["ShowChat"]?.ToString(), out ZShowChat);
+                            if (!json["TaserKill"].ContainsKey("ShowCenter")) ZShowCenter = false; else bool.TryParse(json["TaserKill"]["ShowCenter"]?.ToString(), out ZShowCenter);
+                        }
                     }else if (json.ContainsKey("TaserKill_" + numberoftaserkill))
                     {
                         ZSteak = true;
-                        ZsoundPath = json["TaserKill_" + numberoftaserkill]["Path"]?.ToString()!;
-                        if (!json["TaserKill_" + numberoftaserkill].ContainsKey("Interval_InSecs")) ZInterval = 5; else double.TryParse(json["TaserKill_" + numberoftaserkill]["Interval_InSecs"]?.ToString(), out ZInterval);
-                        if (!json["TaserKill_" + numberoftaserkill].ContainsKey("ShowCenter_InSecs")) ZIntervalHUD = 0; else float.TryParse(json["TaserKill_" + numberoftaserkill]["ShowCenter_InSecs"]?.ToString(), out ZIntervalHUD);
-                        if (!json["TaserKill_" + numberoftaserkill].ContainsKey("Announcement")) Zanouncement = false; else bool.TryParse(json["TaserKill_" + numberoftaserkill]["Announcement"]?.ToString(), out Zanouncement);
-                        if (!json["TaserKill_" + numberoftaserkill].ContainsKey("ShowChat")) ZShowChat = false; else bool.TryParse(json["TaserKill_" + numberoftaserkill]["ShowChat"]?.ToString(), out ZShowChat);
-                        if (!json["TaserKill_" + numberoftaserkill].ContainsKey("ShowCenter")) ZShowCenter = false; else bool.TryParse(json["TaserKill_" + numberoftaserkill]["ShowCenter"]?.ToString(), out ZShowCenter);
+                        ZsoundsPath = pathJson["TaserKill_" + numberoftaserkill + "_Paths"];           
+                        if (ZsoundsPath != null && ZsoundsPath.Count > 0) 
+                        {
+                            ZsoundPath = ZsoundsPath[random.Next(ZsoundsPath.Count)];
+                            if (!json["TaserKill_" + numberoftaserkill].ContainsKey("Interval_InSecs")) ZInterval = 5; else double.TryParse(json["TaserKill_" + numberoftaserkill]["Interval_InSecs"]?.ToString(), out ZInterval);
+                            if (!json["TaserKill_" + numberoftaserkill].ContainsKey("ShowCenter_InSecs")) ZIntervalHUD = 0; else float.TryParse(json["TaserKill_" + numberoftaserkill]["ShowCenter_InSecs"]?.ToString(), out ZIntervalHUD);
+                            if (!json["TaserKill_" + numberoftaserkill].ContainsKey("Announcement")) Zanouncement = false; else bool.TryParse(json["TaserKill_" + numberoftaserkill]["Announcement"]?.ToString(), out Zanouncement);
+                            if (!json["TaserKill_" + numberoftaserkill].ContainsKey("ShowChat")) ZShowChat = false; else bool.TryParse(json["TaserKill_" + numberoftaserkill]["ShowChat"]?.ToString(), out ZShowChat);
+                            if (!json["TaserKill_" + numberoftaserkill].ContainsKey("ShowCenter")) ZShowCenter = false; else bool.TryParse(json["TaserKill_" + numberoftaserkill]["ShowCenter"]?.ToString(), out ZShowCenter);
+                        }
                     }
                     if (TaserKill && !string.IsNullOrEmpty(ZsoundPath) && ZInterval > 0)
                     {
@@ -1859,6 +1922,7 @@ public class KillSoundGoldKingZ : BasePlugin
 
 
                     string HsoundPath = "";
+                    List<string> HsoundsPath;
                     double HInterval = 5;
                     float HIntervalHUD = 10;
                     bool Hanouncement = false;
@@ -1868,21 +1932,29 @@ public class KillSoundGoldKingZ : BasePlugin
                     if (json.ContainsKey("HeadShot"))
                     {
                         HSteak = false;
-                        HsoundPath = json["HeadShot"]["Path"]?.ToString()!;
-                        if (!json["HeadShot"].ContainsKey("Interval_InSecs")) HInterval = 5; else double.TryParse(json["HeadShot"]["Interval_InSecs"]?.ToString(), out HInterval);
-                        if (!json["HeadShot"].ContainsKey("ShowCenter_InSecs")) HIntervalHUD = 0; else float.TryParse(json["HeadShot"]["ShowCenter_InSecs"]?.ToString(), out HIntervalHUD);
-                        if (!json["HeadShot"].ContainsKey("Announcement")) Hanouncement = false; else bool.TryParse(json["HeadShot"]["Announcement"]?.ToString(), out Hanouncement);
-                        if (!json["HeadShot"].ContainsKey("ShowChat")) HShowChat = false; else bool.TryParse(json["HeadShot"]["ShowChat"]?.ToString(), out HShowChat);
-                        if (!json["HeadShot"].ContainsKey("ShowCenter")) HShowCenter = false; else bool.TryParse(json["HeadShot"]["ShowCenter"]?.ToString(), out HShowCenter);
+                        HsoundsPath = pathJson["HeadShot_Paths"];           
+                        if (HsoundsPath != null && HsoundsPath.Count > 0) 
+                        {
+                            HsoundPath = HsoundsPath[random.Next(HsoundsPath.Count)];
+                            if (!json["HeadShot"].ContainsKey("Interval_InSecs")) HInterval = 5; else double.TryParse(json["HeadShot"]["Interval_InSecs"]?.ToString(), out HInterval);
+                            if (!json["HeadShot"].ContainsKey("ShowCenter_InSecs")) HIntervalHUD = 0; else float.TryParse(json["HeadShot"]["ShowCenter_InSecs"]?.ToString(), out HIntervalHUD);
+                            if (!json["HeadShot"].ContainsKey("Announcement")) Hanouncement = false; else bool.TryParse(json["HeadShot"]["Announcement"]?.ToString(), out Hanouncement);
+                            if (!json["HeadShot"].ContainsKey("ShowChat")) HShowChat = false; else bool.TryParse(json["HeadShot"]["ShowChat"]?.ToString(), out HShowChat);
+                            if (!json["HeadShot"].ContainsKey("ShowCenter")) HShowCenter = false; else bool.TryParse(json["HeadShot"]["ShowCenter"]?.ToString(), out HShowCenter);
+                        }
                     }else if (json.ContainsKey("HeadShot_" + numberofkillsHS))
                     {
                         HSteak = true;
-                        HsoundPath = json["HeadShot_" + numberofkillsHS]["Path"]?.ToString()!;
-                        if (!json["HeadShot_" + numberofkillsHS].ContainsKey("Interval_InSecs")) HInterval = 5; else double.TryParse(json["HeadShot_" + numberofkillsHS]["Interval_InSecs"]?.ToString(), out HInterval);
-                        if (!json["HeadShot_" + numberofkillsHS].ContainsKey("ShowCenter_InSecs")) HIntervalHUD = 0; else float.TryParse(json["HeadShot_" + numberofkillsHS]["ShowCenter_InSecs"]?.ToString(), out HIntervalHUD);
-                        if (!json["HeadShot_" + numberofkillsHS].ContainsKey("Announcement")) Hanouncement = false; else bool.TryParse(json["HeadShot_" + numberofkillsHS]["Announcement"]?.ToString(), out Hanouncement);
-                        if (!json["HeadShot_" + numberofkillsHS].ContainsKey("ShowChat")) HShowChat = false; else bool.TryParse(json["HeadShot_" + numberofkillsHS]["ShowChat"]?.ToString(), out HShowChat);
-                        if (!json["HeadShot_" + numberofkillsHS].ContainsKey("ShowCenter")) HShowCenter = false; else bool.TryParse(json["HeadShot_" + numberofkillsHS]["ShowCenter"]?.ToString(), out HShowCenter);
+                        HsoundsPath = pathJson["HeadShot_" + numberofkillsHS + "_Paths"];           
+                        if (HsoundsPath != null && HsoundsPath.Count > 0) 
+                        {
+                            HsoundPath = HsoundsPath[random.Next(HsoundsPath.Count)];
+                            if (!json["HeadShot_" + numberofkillsHS].ContainsKey("Interval_InSecs")) HInterval = 5; else double.TryParse(json["HeadShot_" + numberofkillsHS]["Interval_InSecs"]?.ToString(), out HInterval);
+                            if (!json["HeadShot_" + numberofkillsHS].ContainsKey("ShowCenter_InSecs")) HIntervalHUD = 0; else float.TryParse(json["HeadShot_" + numberofkillsHS]["ShowCenter_InSecs"]?.ToString(), out HIntervalHUD);
+                            if (!json["HeadShot_" + numberofkillsHS].ContainsKey("Announcement")) Hanouncement = false; else bool.TryParse(json["HeadShot_" + numberofkillsHS]["Announcement"]?.ToString(), out Hanouncement);
+                            if (!json["HeadShot_" + numberofkillsHS].ContainsKey("ShowChat")) HShowChat = false; else bool.TryParse(json["HeadShot_" + numberofkillsHS]["ShowChat"]?.ToString(), out HShowChat);
+                            if (!json["HeadShot_" + numberofkillsHS].ContainsKey("ShowCenter")) HShowCenter = false; else bool.TryParse(json["HeadShot_" + numberofkillsHS]["ShowCenter"]?.ToString(), out HShowCenter);
+                        }
                     }
                     if (headshot && !string.IsNullOrEmpty(HsoundPath) && HInterval > 0)
                     {
@@ -2085,6 +2157,7 @@ public class KillSoundGoldKingZ : BasePlugin
                     }
                     
                     string soundPath = "";
+                    List<string> soundsPath;
                     double Interval = 5;
                     float IntervalHUD = 10;
                     bool Kanouncement = false;
@@ -2094,21 +2167,29 @@ public class KillSoundGoldKingZ : BasePlugin
                     if (json.ContainsKey("Kill"))
                     {
                         KSteak = false;
-                        soundPath = json["Kill"]["Path"]?.ToString()!;
-                        if (!json["Kill"].ContainsKey("Interval_InSecs")) Interval = 5; else double.TryParse(json["Kill"]["Interval_InSecs"]?.ToString(), out Interval);
-                        if (!json["Kill"].ContainsKey("ShowCenter_InSecs")) IntervalHUD = 0; else float.TryParse(json["Kill"]["ShowCenter_InSecs"]?.ToString(), out IntervalHUD);
-                        if (!json["Kill"].ContainsKey("Announcement")) Kanouncement = false; else bool.TryParse(json["Kill"]["Announcement"]?.ToString(), out Kanouncement);
-                        if (!json["Kill"].ContainsKey("ShowChat")) KShowChat = false; else bool.TryParse(json["Kill"]["ShowChat"]?.ToString(), out KShowChat);
-                        if (!json["Kill"].ContainsKey("ShowCenter")) KShowCenter = false; else bool.TryParse(json["Kill"]["ShowCenter"]?.ToString(), out KShowCenter);
+                        soundsPath = pathJson["Kill_Paths"];           
+                        if (soundsPath != null && soundsPath.Count > 0) 
+                        {
+                            soundPath = soundsPath[random.Next(soundsPath.Count)];
+                            if (!json["Kill"].ContainsKey("Interval_InSecs")) Interval = 5; else double.TryParse(json["Kill"]["Interval_InSecs"]?.ToString(), out Interval);
+                            if (!json["Kill"].ContainsKey("ShowCenter_InSecs")) IntervalHUD = 0; else float.TryParse(json["Kill"]["ShowCenter_InSecs"]?.ToString(), out IntervalHUD);
+                            if (!json["Kill"].ContainsKey("Announcement")) Kanouncement = false; else bool.TryParse(json["Kill"]["Announcement"]?.ToString(), out Kanouncement);
+                            if (!json["Kill"].ContainsKey("ShowChat")) KShowChat = false; else bool.TryParse(json["Kill"]["ShowChat"]?.ToString(), out KShowChat);
+                            if (!json["Kill"].ContainsKey("ShowCenter")) KShowCenter = false; else bool.TryParse(json["Kill"]["ShowCenter"]?.ToString(), out KShowCenter);
+                        }
                     }else if (json.ContainsKey("Kill_" + numberofkills))
                     {
                         KSteak = true;
-                        soundPath = json["Kill_" + numberofkills]["Path"]?.ToString()!;
-                        if (!json["Kill_" + numberofkills].ContainsKey("Interval_InSecs")) Interval = 5; else double.TryParse(json["Kill_" + numberofkills]["Interval_InSecs"]?.ToString(), out Interval);
-                        if (!json["Kill_" + numberofkills].ContainsKey("ShowCenter_InSecs")) IntervalHUD = 0; else float.TryParse(json["Kill_" + numberofkills]["ShowCenter_InSecs"]?.ToString(), out IntervalHUD);
-                        if (!json["Kill_" + numberofkills].ContainsKey("Announcement")) Kanouncement = false; else bool.TryParse(json["Kill_" + numberofkills]["Announcement"]?.ToString(), out Kanouncement);
-                        if (!json["Kill_" + numberofkills].ContainsKey("ShowChat")) KShowChat = false; else bool.TryParse(json["Kill_" + numberofkills]["ShowChat"]?.ToString(), out KShowChat);
-                        if (!json["Kill_" + numberofkills].ContainsKey("ShowCenter")) KShowCenter = false; else bool.TryParse(json["Kill_" + numberofkills]["ShowCenter"]?.ToString(), out KShowCenter);
+                        soundsPath = pathJson["Kill_" + numberofkills + "_Paths"];           
+                        if (soundsPath != null && soundsPath.Count > 0) 
+                        {
+                            soundPath = soundsPath[random.Next(soundsPath.Count)];
+                            if (!json["Kill_" + numberofkills].ContainsKey("Interval_InSecs")) Interval = 5; else double.TryParse(json["Kill_" + numberofkills]["Interval_InSecs"]?.ToString(), out Interval);
+                            if (!json["Kill_" + numberofkills].ContainsKey("ShowCenter_InSecs")) IntervalHUD = 0; else float.TryParse(json["Kill_" + numberofkills]["ShowCenter_InSecs"]?.ToString(), out IntervalHUD);
+                            if (!json["Kill_" + numberofkills].ContainsKey("Announcement")) Kanouncement = false; else bool.TryParse(json["Kill_" + numberofkills]["Announcement"]?.ToString(), out Kanouncement);
+                            if (!json["Kill_" + numberofkills].ContainsKey("ShowChat")) KShowChat = false; else bool.TryParse(json["Kill_" + numberofkills]["ShowChat"]?.ToString(), out KShowChat);
+                            if (!json["Kill_" + numberofkills].ContainsKey("ShowCenter")) KShowCenter = false; else bool.TryParse(json["Kill_" + numberofkills]["ShowCenter"]?.ToString(), out KShowCenter);
+                        }
                     }
                     if (!string.IsNullOrEmpty(soundPath) && Interval > 0)
                     {
@@ -2345,18 +2426,25 @@ public class KillSoundGoldKingZ : BasePlugin
         try
         {
             string _json = Path.Combine(ModuleDirectory, "../../plugins/Kill-Sound-GoldKingZ/config/Kill_Settings.json");
+            string _pathJson = Path.Combine(ModuleDirectory, "../../plugins/Kill-Sound-GoldKingZ/config/Kill_Paths.json");
             var json = Helper.LoadJsonFromFile(_json);
+            var pathJson = Helper.LoadPathJsonFromFile(_pathJson);
 
             string PsoundPath = "";
+            List<string> PsoundsPath;
             float PIntervalHUD = 10;
             bool PShowChat = false;
             bool PShowCenter = false;
             if (json.ContainsKey("RoundPrepare"))
-            {
-                PsoundPath = json["RoundPrepare"]["Path"]?.ToString()!;
-                if (!json["RoundPrepare"].ContainsKey("ShowCenter_InSecs")) PIntervalHUD = 0; else float.TryParse(json["RoundPrepare"]["ShowCenter_InSecs"]?.ToString(), out PIntervalHUD);
-                if (!json["RoundPrepare"].ContainsKey("ShowChat")) PShowChat = false; else bool.TryParse(json["RoundPrepare"]["ShowChat"]?.ToString(), out PShowChat);
-                if (!json["RoundPrepare"].ContainsKey("ShowCenter")) PShowCenter = false; else bool.TryParse(json["RoundPrepare"]["ShowCenter"]?.ToString(), out PShowCenter);
+            {                
+                PsoundsPath = pathJson["RoundPrepare_Paths"];           
+                if (PsoundsPath != null && PsoundsPath.Count > 0) 
+                {
+                    PsoundPath = PsoundsPath[random.Next(PsoundsPath.Count)];
+                    if (!json["RoundPrepare"].ContainsKey("ShowCenter_InSecs")) PIntervalHUD = 0; else float.TryParse(json["RoundPrepare"]["ShowCenter_InSecs"]?.ToString(), out PIntervalHUD);
+                    if (!json["RoundPrepare"].ContainsKey("ShowChat")) PShowChat = false; else bool.TryParse(json["RoundPrepare"]["ShowChat"]?.ToString(), out PShowChat);
+                    if (!json["RoundPrepare"].ContainsKey("ShowCenter")) PShowCenter = false; else bool.TryParse(json["RoundPrepare"]["ShowCenter"]?.ToString(), out PShowCenter);
+                }
             }
             
             if (!string.IsNullOrEmpty(PsoundPath))
@@ -2616,18 +2704,25 @@ public class KillSoundGoldKingZ : BasePlugin
                 try
                 {
                     string _json = Path.Combine(ModuleDirectory, "../../plugins/Kill-Sound-GoldKingZ/config/Kill_Settings.json");
+                    string _pathJson = Path.Combine(ModuleDirectory, "../../plugins/Kill-Sound-GoldKingZ/config/Kill_Paths.json");
                     var json = Helper.LoadJsonFromFile(_json);
+                    var pathJson = Helper.LoadPathJsonFromFile(_pathJson);
 
                     string RsoundPath = "";
+                    List<string> RsoundsPath;
                     float RIntervalHUD = 10;
                     bool RShowChat = false;
                     bool RShowCenter = false;
                     if (json.ContainsKey("RoundStart"))
                     {
-                        RsoundPath = json["RoundStart"]["Path"]?.ToString()!;
-                        if (!json["RoundStart"].ContainsKey("ShowCenter_InSecs")) RIntervalHUD = 0; else float.TryParse(json["RoundStart"]["ShowCenter_InSecs"]?.ToString(), out RIntervalHUD);
-                        if (!json["RoundStart"].ContainsKey("ShowChat")) RShowChat = false; else bool.TryParse(json["RoundStart"]["ShowChat"]?.ToString(), out RShowChat);
-                        if (!json["RoundStart"].ContainsKey("ShowCenter")) RShowCenter = false; else bool.TryParse(json["RoundStart"]["ShowCenter"]?.ToString(), out RShowCenter);
+                        RsoundsPath = pathJson["RoundStart_Paths"];           
+                        if (RsoundsPath != null && RsoundsPath.Count > 0) 
+                        {
+                            RsoundPath = RsoundsPath[random.Next(RsoundsPath.Count)];
+                            if (!json["RoundStart"].ContainsKey("ShowCenter_InSecs")) RIntervalHUD = 0; else float.TryParse(json["RoundStart"]["ShowCenter_InSecs"]?.ToString(), out RIntervalHUD);
+                            if (!json["RoundStart"].ContainsKey("ShowChat")) RShowChat = false; else bool.TryParse(json["RoundStart"]["ShowChat"]?.ToString(), out RShowChat);
+                            if (!json["RoundStart"].ContainsKey("ShowCenter")) RShowCenter = false; else bool.TryParse(json["RoundStart"]["ShowCenter"]?.ToString(), out RShowCenter);
+                        }
                     }
 					
                     if (!string.IsNullOrEmpty(RsoundPath))

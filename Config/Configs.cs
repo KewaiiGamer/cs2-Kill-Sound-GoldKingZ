@@ -13,9 +13,11 @@ namespace Kill_Sound_GoldKingZ.Config
         private static readonly string ConfigFileName = "config.json";
         private static readonly string jsonFilePath = "Kill_Settings.json";
         private static readonly string jsonFilePath2 = "MySql_Settings.json";
+        private static readonly string jsonFilePath3 = "Kill_Paths.json";
         private static string? _configFilePath;
         private static string? _jsonFilePath;
         private static string? _jsonFilePath2;
+        private static string? _jsonFilePath3;
         private static ConfigData? _configData;
 
         private static readonly JsonSerializerOptions SerializationOptions = new()
@@ -56,6 +58,9 @@ namespace Kill_Sound_GoldKingZ.Config
 
             _jsonFilePath2 = Path.Combine(configFileDirectory, jsonFilePath2);
             Helper.CreateDefaultWeaponsJson2(_jsonFilePath2);
+
+            _jsonFilePath3 = Path.Combine(configFileDirectory, jsonFilePath3);
+            Helper.CreateDefaultWeaponsJson3(_jsonFilePath3);
 
             _configFilePath = Path.Combine(configFileDirectory, ConfigFileName);
             if (File.Exists(_configFilePath))

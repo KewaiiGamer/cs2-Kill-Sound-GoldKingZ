@@ -19,7 +19,14 @@ public class Helper
             return JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, string>>>(json)!;
         }
     }
-
+    public static Dictionary<string, List<string>> LoadPathJsonFromFile(string filePath)
+    {
+        using (StreamReader r = new StreamReader(filePath))
+        {
+            string json = r.ReadToEnd();
+            return JsonConvert.DeserializeObject<Dictionary<string, List<string>>>(json)!;
+        }
+    }
     public static void AdvancedPrintToChat(CCSPlayerController player, string message, params object[] args)
     {
         for (int i = 0; i < args.Length; i++)
@@ -136,6 +143,115 @@ public class Helper
                                     .Replace("{REASON}", reason);
         return replacedMessage;
     }
+    public static void CreateDefaultWeaponsJson3(string jsonFilePath)
+    {
+        if (!File.Exists(jsonFilePath))
+        {
+            var configData = new Dictionary<string, object>
+            {
+                ["HeadShot_1_Paths"] = new List<string>
+                {
+                    "sounds/GoldKingZ/Quake/headshot.vsnd_c"
+                },
+                ["HeadShot_2_Paths"] = new List<string>
+                {
+                    "sounds/GoldKingZ/Quake/headshot.vsnd_c"
+                },
+                ["HeadShot_5_Paths"] = new List<string>
+                {
+                    "sounds/GoldKingZ/Quake/headhunter.vsnd_c"
+                },
+                ["Kill_4_Paths"] = new List<string>
+                {
+                    "sounds/GoldKingZ/Quake/dominating.vsnd_c"
+                },
+                ["Kill_6_Paths"] = new List<string>
+                {
+                    "sounds/GoldKingZ/Quake/rampage.vsnd_c"
+                },
+                ["Kill_8_Paths"] = new List<string>
+                {
+                    "sounds/GoldKingZ/Quake/killingspree.vsnd_c"
+                },
+                ["Kill_10_Paths"] = new List<string>
+                {
+                    "sounds/GoldKingZ/Quake/monsterkill.vsnd_c"
+                },
+                ["Kill_14_Paths"] = new List<string>
+                {
+                    "sounds/GoldKingZ/Quake/unstoppable.vsnd_c"
+                },
+                ["Kill_16_Paths"] = new List<string>
+                {
+                    "sounds/GoldKingZ/Quake/ultrakill.vsnd_c"
+                },
+                ["Kill_18_Paths"] = new List<string>
+                {
+                    "sounds/GoldKingZ/Quake/godlike.vsnd_c"
+                },
+                ["Kill_20_Paths"] = new List<string>
+                {
+                    "sounds/GoldKingZ/Quake/wickedsick.vsnd_c"
+                },
+                ["Kill_24_Paths"] = new List<string>
+                {
+                    "sounds/GoldKingZ/Quake/ludicrouskill.vsnd_c"
+                },
+                ["Kill_26_Paths"] = new List<string>
+                {
+                    "sounds/GoldKingZ/Quake/holyshit.vsnd_c"
+                },
+                ["KnifeKill_Paths"] = new List<string>
+                {
+                    "sounds/GoldKingZ/Quake/humiliation.vsnd_c"
+                },
+                ["TaserKill_Paths"] = new List<string>
+                {
+                    "sounds/GoldKingZ/Quake/humiliation.vsnd_c"
+                },
+                ["GrenadeKill_Paths"] = new List<string>
+                {
+                    "sounds/GoldKingZ/Quake/perfect.vsnd_c"
+                },
+                ["MollyKill_Paths"] = new List<string>
+                {
+                    "sounds/GoldKingZ/Quake/impressive.vsnd_c"
+                },
+                ["SelfKill_Paths"] = new List<string>
+                {
+                    "sounds/GoldKingZ/Quake/haha.vsnd_c"
+                },
+                ["TeamKill_Paths"] = new List<string>
+                {
+                    "sounds/GoldKingZ/Quake/teamkiller.vsnd_c"
+                },
+                ["FirstBlood_Paths"] = new List<string>
+                {
+                    "sounds/GoldKingZ/Quake/firstblood.vsnd_c"
+                },
+                ["RoundPrepare_Paths"] = new List<string>
+                {
+                    "sounds/GoldKingZ/Quake/prepare.vsnd_c"
+                },
+                ["RoundStart_Paths"] = new List<string>
+                {
+                    "sounds/GoldKingZ/Quake/play.vsnd_c"
+                }
+            };
+
+            var options = new JsonSerializerOptions
+            {
+                WriteIndented = true
+            };
+
+            string json = System.Text.Json.JsonSerializer.Serialize(configData, options);
+
+            json = "// Note: To Use These You Need To Enable KS_EnableQuakeSounds First In config.json \n// Then Download https://github.com/Source2ZE/MultiAddonManager  With Gold KingZ WorkShop \n// https://steamcommunity.com/sharedfiles/filedetails/?id=3230015783\n// mm_extra_addons 3230015783\n// You Can Find WorkShop Path Sound In  https://github.com/oqyh/cs2-Kill-Sound-GoldKingZ/blob/main/sounds/Gold%20KingZ%20WorkShop%20Sounds.txt \n\n" + json;
+
+            File.WriteAllText(jsonFilePath, json);
+        }
+    }
+    
     public static void CreateDefaultWeaponsJson(string jsonFilePath)
     {
         if (!File.Exists(jsonFilePath))
@@ -148,7 +264,6 @@ public class Helper
                     { "ShowChat", false },
                     { "ShowCenter", false },
                     { "ShowCenter_InSecs", 10 },
-                    { "Path", "sounds/GoldKingZ/Quake/headshot.vsnd_c" },
                     { "Interval_InSecs", 5 }
                 },
                 ["HeadShot_2"] = new Dictionary<string, object>
@@ -157,7 +272,6 @@ public class Helper
                     { "ShowChat", false },
                     { "ShowCenter", false },
                     { "ShowCenter_InSecs", 10 },
-                    { "Path", "sounds/GoldKingZ/Quake/headshot.vsnd_c" },
                     { "Interval_InSecs", 5 }
                 },
                 ["HeadShot_5"] = new Dictionary<string, object>
@@ -166,7 +280,6 @@ public class Helper
                     { "ShowChat", true },
                     { "ShowCenter", true },
                     { "ShowCenter_InSecs", 10 },
-                    { "Path", "sounds/GoldKingZ/Quake/headhunter.vsnd_c" },
                     { "Interval_InSecs", 5 }
                 },
                 ["Kill_4"] = new Dictionary<string, object>
@@ -175,7 +288,6 @@ public class Helper
                     { "ShowChat", true },
                     { "ShowCenter", true },
                     { "ShowCenter_InSecs", 10 },
-                    { "Path", "sounds/GoldKingZ/Quake/dominating.vsnd_c" },
                     { "Interval_InSecs", 5 }
                 },
                 ["Kill_6"] = new Dictionary<string, object>
@@ -184,7 +296,6 @@ public class Helper
                     { "ShowChat", true },
                     { "ShowCenter", true },
                     { "ShowCenter_InSecs", 10 },
-                    { "Path", "sounds/GoldKingZ/Quake/rampage.vsnd_c" },
                     { "Interval_InSecs", 5 }
                 },
                 ["Kill_8"] = new Dictionary<string, object>
@@ -193,7 +304,6 @@ public class Helper
                     { "ShowChat", true },
                     { "ShowCenter", true },
                     { "ShowCenter_InSecs", 10 },
-                    { "Path", "sounds/GoldKingZ/Quake/killingspree.vsnd_c" },
                     { "Interval_InSecs", 5 }
                 },
                 ["Kill_10"] = new Dictionary<string, object>
@@ -202,7 +312,6 @@ public class Helper
                     { "ShowChat", true },
                     { "ShowCenter", true },
                     { "ShowCenter_InSecs", 10 },
-                    { "Path", "sounds/GoldKingZ/Quake/monsterkill.vsnd_c" },
                     { "Interval_InSecs", 5 }
                 },
                 ["Kill_14"] = new Dictionary<string, object>
@@ -211,7 +320,6 @@ public class Helper
                     { "ShowChat", true },
                     { "ShowCenter", true },
                     { "ShowCenter_InSecs", 10 },
-                    { "Path", "sounds/GoldKingZ/Quake/unstoppable.vsnd_c" },
                     { "Interval_InSecs", 5 }
                 },
                 ["Kill_16"] = new Dictionary<string, object>
@@ -220,7 +328,6 @@ public class Helper
                     { "ShowChat", true },
                     { "ShowCenter", true },
                     { "ShowCenter_InSecs", 10 },
-                    { "Path", "sounds/GoldKingZ/Quake/ultrakill.vsnd_c" },
                     { "Interval_InSecs", 5 }
                 },
                 ["Kill_18"] = new Dictionary<string, object>
@@ -229,7 +336,6 @@ public class Helper
                     { "ShowChat", true },
                     { "ShowCenter", true },
                     { "ShowCenter_InSecs", 10 },
-                    { "Path", "sounds/GoldKingZ/Quake/godlike.vsnd_c" },
                     { "Interval_InSecs", 5 }
                 },
                 ["Kill_20"] = new Dictionary<string, object>
@@ -238,7 +344,6 @@ public class Helper
                     { "ShowChat", true },
                     { "ShowCenter", true },
                     { "ShowCenter_InSecs", 10 },
-                    { "Path", "sounds/GoldKingZ/Quake/wickedsick.vsnd_c" },
                     { "Interval_InSecs", 5 }
                 },
                 ["Kill_24"] = new Dictionary<string, object>
@@ -247,8 +352,6 @@ public class Helper
                     { "ShowChat", true },
                     { "ShowCenter", true },
                     { "ShowCenter_InSecs", 10 },
-                    { "Path", "sounds/GoldKingZ/Quake/ludicrouskill.vsnd_c" },
-                    { "Interval_InSecs", 5 }
                 },
                 ["Kill_26"] = new Dictionary<string, object>
                 {
@@ -256,7 +359,6 @@ public class Helper
                     { "ShowChat", true },
                     { "ShowCenter", true },
                     { "ShowCenter_InSecs", 15 },
-                    { "Path", "sounds/GoldKingZ/Quake/holyshit.vsnd_c" },
                     { "Interval_InSecs", 5 }
                 },
                 ["KnifeKill"] = new Dictionary<string, object>
@@ -265,7 +367,6 @@ public class Helper
                     { "ShowChat", true },
                     { "ShowCenter", true },
                     { "ShowCenter_InSecs", 10 },
-                    { "Path", "sounds/GoldKingZ/Quake/humiliation.vsnd_c" },
                     { "Interval_InSecs", 5 }
                 },
                 ["TaserKill"] = new Dictionary<string, object>
@@ -274,7 +375,6 @@ public class Helper
                     { "ShowChat", true },
                     { "ShowCenter", true },
                     { "ShowCenter_InSecs", 10 },
-                    { "Path", "sounds/GoldKingZ/Quake/humiliation.vsnd_c" },
                     { "Interval_InSecs", 5 }
                 },
                 ["GrenadeKill"] = new Dictionary<string, object>
@@ -283,7 +383,6 @@ public class Helper
                     { "ShowChat", true },
                     { "ShowCenter", false },
                     { "ShowCenter_InSecs", 10 },
-                    { "Path", "sounds/GoldKingZ/Quake/perfect.vsnd_c" },
                     { "Interval_InSecs", 5 }
                 },
                 ["MollyKill"] = new Dictionary<string, object>
@@ -292,7 +391,6 @@ public class Helper
                     { "ShowChat", true },
                     { "ShowCenter", false },
                     { "ShowCenter_InSecs", 10 },
-                    { "Path", "sounds/GoldKingZ/Quake/impressive.vsnd_c" },
                     { "Interval_InSecs", 5 }
                 },
                 ["SelfKill"] = new Dictionary<string, object>
@@ -301,7 +399,6 @@ public class Helper
                     { "ShowChat", true },
                     { "ShowCenter", false },
                     { "ShowCenter_InSecs", 10 },
-                    { "Path", "sounds/GoldKingZ/Quake/haha.vsnd_c" },
                     { "Interval_InSecs", 5 }
                 },
                 ["TeamKill"] = new Dictionary<string, object>
@@ -310,7 +407,6 @@ public class Helper
                     { "ShowChat", true },
                     { "ShowCenter", false },
                     { "ShowCenter_InSecs", 10 },
-                    { "Path", "sounds/GoldKingZ/Quake/teamkiller.vsnd_c" },
                     { "Interval_InSecs", 5 }
                 },
                 ["FirstBlood"] = new Dictionary<string, object>
@@ -319,21 +415,18 @@ public class Helper
                     { "ShowChat", true },
                     { "ShowCenter", false },
                     { "ShowCenter_InSecs", 10 },
-                    { "Path", "sounds/GoldKingZ/Quake/firstblood.vsnd_c" }
                 },
                 ["RoundPrepare"] = new Dictionary<string, object>
                 {
                     { "ShowChat", true },
                     { "ShowCenter", true },
                     { "ShowCenter_InSecs", 10 },
-                    { "Path", "sounds/GoldKingZ/Quake/prepare.vsnd_c" }
                 },
                 ["RoundStart"] = new Dictionary<string, object>
                 {
                     { "ShowChat", true },
                     { "ShowCenter", true },
                     { "ShowCenter_InSecs", 10 },
-                    { "Path", "sounds/GoldKingZ/Quake/play.vsnd_c" }
                 }
             };
 
